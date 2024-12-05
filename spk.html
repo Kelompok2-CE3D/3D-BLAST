@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Example</title>
+    <script>
+        function checkLoginStatus() {
+            // Check if user is logged in
+            if (!localStorage.getItem('loggedin')) {
+                window.location.href = 'login.html'; // Redirect to login page
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedin'); // Remove login status
+            window.location.href = 'login.html'; // Redirect to login page
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+</head>
+<body>
+    <h1>Welcome, User!</h1>
+    <button onclick="logout()">Logout</button>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Input Kriteria BLT-Dana Desa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulir BLT-Dana Desa</h1>
+        <form action="#" method="post">
+            <!-- Keikutsertaan Program -->
+            <label>1. Keikutsertaan Program:</label>
+            <input type="checkbox" name="program" value="PKH"> Program Keluarga Harapan (PKH)<br>
+            <input type="checkbox" name="program" value="BPNT"> Bantuan Pangan Non Tunai (BPNT)<br>
+            <input type="checkbox" name="program" value="BST"> Bantuan Sosial Tunai (BST)<br>
+            <input type="checkbox" name="program" value="KKS"> Kartu Keluarga Sejahtera (KKS)<br>
+            <input type="checkbox" name="program" value="KPS"> Kartu Perlindungan Sosial (KPS)<br>
+
+            <!-- Kondisi Rumah -->
+            <label>2. Kondisi Rumah:</label>
+            <input type="radio" name="kondisi_rumah" value="layak"> Layak<br>
+            <input type="radio" name="kondisi_rumah" value="cukup_layak"> Cukup Layak<br>
+            <input type="radio" name="kondisi_rumah" value="kurang_layak"> Kurang Layak<br>
+            <input type="radio" name="kondisi_rumah" value="tidak_layak"> Tidak Layak<br>
+
+            <!-- Status Kepemilikan Rumah -->
+            <label>3. Status Kepemilikan Rumah:</label>
+            <input type="radio" name="status_rumah" value="milik_sendiri"> Milik Sendiri<br>
+            <input type="radio" name="status_rumah" value="kontrak"> Kontrak<br>
+            <input type="radio" name="status_rumah" value="menumpang"> Menumpang<br>
+
+            <!-- Jumlah Tanggungan -->
+            <label>4. Jumlah Tanggungan:</label>
+            <input type="radio" name="tanggungan" value="1"> 1<br>
+            <input type="radio" name="tanggungan" value="2"> 2<br>
+            <input type="radio" name="tanggungan" value="3"> 3<br>
+            <input type="radio" name="tanggungan" value="lebih_dari_3"> >3<br>
+
+            <!-- Pekerjaan -->
+            <label>5. Pekerjaan:</label>
+            <input type="radio" name="pekerjaan" value="karyawan_swasta"> Karyawan Swasta<br>
+            <input type="radio" name="pekerjaan" value="guru"> Guru<br>
+            <input type="radio" name="pekerjaan" value="pedagang"> Pedagang<br>
+            <input type="radio" name="pekerjaan" value="wirausaha"> Wirausaha<br>
+            <input type="radio" name="pekerjaan" value="buruh"> Buruh/Sopir<br>
+            <input type="radio" name="pekerjaan" value="tidak_bekerja"> Tidak Bekerja<br>
+
+            <!-- Penghasilan -->
+            <label>6. Penghasilan Bulanan:</label>
+            <input type="radio" name="penghasilan" value="lebih_dari_2jt"> > Rp2.000.000<br>
+            <input type="radio" name="penghasilan" value="1.5jt_2jt"> Rp1.500.001 – Rp2.000.000<br>
+            <input type="radio" name="penghasilan" value="1jt_1.5jt"> Rp1.000.001 – Rp1.500.000<br>
+            <input type="radio" name="penghasilan" value="500k_1jt"> Rp500.001 – Rp1.000.000<br>
+            <input type="radio" name="penghasilan" value="kurang_dari_500k"> Rp0 – Rp500.000<br>
+
+            <button type="submit">Kirim Data</button>
+        </form>
+    </div>
+</body>
+</html>

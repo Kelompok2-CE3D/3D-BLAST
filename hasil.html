@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Dana Bantuan</title>
+  <link rel="stylesheet" href="daftar.css">
+  <style>
+    .form-slide { display: none; }
+    .form-slide.active { display: block; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form id="kipForm">
+      <!-- Slide 1: Demografis -->
+      <div class="form-slide active">
+        <h2>DAFTAR</h2>
+        <div class="input-field">
+          <input type="text" id="nama" name="nama" required>
+          <label for="nama">Nama</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="usia" name="usia" required>
+          <label for="usia">Usia</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="jumlah_tanggungan" name="jumlah_tanggungan" required>
+          <label for="jumlah_tanggungan">Jumlah Tanggungan</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="pekerjaan" name="pekerjaan" required>
+          <label for="pekerjaan">Pekerjaan</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="penghasilan" name="penghasilan" required>
+          <label for="penghasilan">Penghasilan</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="status" name="status" required>
+          <label for="status">Status</label>
+        </div>
+        <div class="input-field">
+          <textarea id="alamat" name="alamat" required></textarea>
+          <label for="alamat">Tempat Tinggal/ Alamat Rumah</label>
+        </div>
+      </div>
+
+      <!-- Slide 2: Ekonomi -->
+      <div class="form-slide">
+        <h2>Ekonomi</h2>
+        <div class="input-field">
+          <input type="text" id="sumber_penghasilan" name="sumber_penghasilan" required>
+          <label for="sumber_penghasilan">Sumber Penghasilan</label>
+        </div>
+        <div class="input-field">
+          <input type="number" id="biaya_hidup" name="biaya_hidup" required>
+          <label for="biaya_hidup">Biaya Hidup (Rumah Menyewa / Tidak)</label>
+        </div>
+      </div>
+
+      <!-- Slide 3: Keputusan -->
+      <div class="form-slide">
+        <h2>Keputusan</h2>
+        <p id="decision"></p>
+      </div>
+
+      <div class="form-navigation">
+        <button type="button" id="prevBtn" onclick="changeSlide(-1)" disabled>Previous</button>
+        <button type="button" id="nextBtn" onclick="changeSlide(1)">Next</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.form-slide');
+
+    function showSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').textContent = currentSlide === slides.length - 1 ? 'Submit' : 'Next';
+    }
+
+    function changeSlide(direction) {
+      if (direction === 1 && currentSlide === slides.length - 1) {
+        // Ambil data dari form
+        const formData = {
+          nama: document.getElementById('nama').value,
+          usia: document.getElementById('usia').value,
+          jumlah_tanggungan: document.getElementById('jumlah_tanggungan').value,
+          pekerjaan: document.getElementById('pekerjaan').value,
+          penghasilan: document.getElementById('penghasilan').value,
+          status: document.getElementById('status').value,
+          alamat: document.getElementById('alamat').value,
+          sumber_penghasilan: document.getElementById('sumber_penghasilan').value,
+          biaya_hidup: document.getElementById('biaya_hidup').value,
+        };
+
+        // Simpan data ke localStorage
+        localStorage.setItem('kipRegistrationData', JSON.stringify(formData));
+
+        // Ambil keputusan berdasarkan data
+        let decision = '';
+        if (formData.penghasilan < 2000000 && formData.jumlah_tanggungan > 2) {
+          decision = 'Anda berhak menerima dana bantuan.';
+        } else {
+          decision = 'Anda berhak menerima dana bantuan.';
+        
+        }
+
+        document.getElementById('decision').textContent = decision;
+        return;
+      }
+
+      if (direction === 1 && currentSlide === slides.length - 2) {
+        document.getElementById('nextBtn').textContent = 'Submit';
+      } else {
+        document.getElementById('nextBtn').textContent = 'Next';
+      }
+
+      if (direction === -1 && currentSlide === 0) return;
+      showSlide(currentSlide + direction);
+    }
+
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
