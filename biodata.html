@@ -77,6 +77,22 @@
         table th {
             background: #f4f4f4;
         }
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +171,9 @@
                 <!-- Data akan ditambahkan di sini -->
             </tbody>
         </table>
+
+        <!-- Tombol Log Out -->
+        <button class="logout-btn" onclick="logOut()">Log Out</button>
     </div>
 
     <script>
@@ -216,27 +235,29 @@
             let rows = table.rows;
             nomor = 1;
             for (let i = 0; i < rows.length; i++) {
-                rows[i].cells[0].innerText = nomor++;
+                rows[i].cells[0].textContent = nomor++;
             }
         }
 
         function editData(button) {
             const row = button.parentElement.parentElement;
             const cells = row.getElementsByTagName('td');
+            document.getElementById('nama').value = cells[1].textContent;
+            document.getElementById('nik').value = cells[2].textContent;
+            document.getElementById('alamat').value = cells[3].textContent;
+            document.getElementById('penghasilan').value = cells[4].textContent;
+            document.getElementById('tanggungan').value = cells[5].textContent;
+            document.getElementById('program').value = cells[6].textContent;
+            document.getElementById('kondisiRumah').value = cells[7].textContent;
+            document.getElementById('statusRumah').value = cells[8].textContent;
+            document.getElementById('pekerjaan').value = cells[9].textContent;
 
-            document.getElementById('nama').value = cells[1].innerText;
-            document.getElementById('nik').value = cells[2].innerText;
-            document.getElementById('alamat').value = cells[3].innerText;
-            document.getElementById('penghasilan').value = cells[4].innerText;
-            document.getElementById('tanggungan').value = cells[5].innerText;
-            document.getElementById('program').value = cells[6].innerText === '-' ? '' : cells[6].innerText;
-            document.getElementById('kondisiRumah').value = cells[7].innerText === '-' ? '' : cells[7].innerText;
-            document.getElementById('statusRumah').value = cells[8].innerText === '-' ? '' : cells[8].innerText;
-            document.getElementById('pekerjaan').value = cells[9].innerText === '-' ? '' : cells[9].innerText;
-
-            // Remove the row to be updated
             row.remove();
-            nomor--;
+        }
+
+        function logOut() {
+            alert('Anda telah keluar.');
+            window.location.href = 'index.html'; // Ganti URL halaman login Anda
         }
     </script>
 </body>
