@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -152,6 +153,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav>
@@ -204,16 +206,19 @@
     <div id="notification" class="notification"></div>
 
     <script>
+        // Fungsi untuk menampilkan Sign Up
         function showSignUp() {
             document.getElementById('loginContainer').style.display = 'none';
             document.getElementById('signUpContainer').style.display = 'block';
         }
 
+        // Fungsi untuk menampilkan Login
         function showLogin() {
             document.getElementById('signUpContainer').style.display = 'none';
             document.getElementById('loginContainer').style.display = 'block';
         }
 
+        // Fungsi untuk menampilkan notifikasi
         function showNotification(message, isError = false) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -224,28 +229,48 @@
             }, 3000);
         }
 
+        // Fungsi Sign Up
         function signUpSuccess() {
             const newUsername = document.getElementById('newUsername').value;
+            const newEmail = document.getElementById('email').value;
             const newPassword = document.getElementById('newPassword').value;
 
-            // Simpan data ke localStorage
-            localStorage.setItem('username', newUsername);
-            localStorage.setItem('password', newPassword);
+            // Ambil data email yang sudah ada di localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Cek apakah email sudah terdaftar
+            const isEmailUsed = users.some(user => user.email === newEmail);
+            if (isEmailUsed) {
+                showNotification("Email sudah digunakan!", true);
+                return false;
+            }
+
+            // Tambahkan data user ke localStorage
+            users.push({
+                username: newUsername,
+                email: newEmail,
+                password: newPassword
+            });
+
+            localStorage.setItem('users', JSON.stringify(users));
 
             showNotification("Sign up berhasil!");
             showLogin();
             return false; // Mencegah pengiriman form default
         }
 
+        // Fungsi Login
         function loginRedirect() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Ambil data dari localStorage
-            const storedUsername = localStorage.getItem('username');
-            const storedPassword = localStorage.getItem('password');
+            // Ambil data pengguna dari localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
 
-            if (username === storedUsername && password === storedPassword) {
+            // Cek apakah login berhasil
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
                 showNotification("Login berhasil!");
                 setTimeout(() => {
                     window.location.href = "biodata.html";
@@ -256,6 +281,9 @@
             return false; // Mencegah pengiriman form default
         }
     </script>
-     <button><a href="index.html">Kembali</a></button>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">Kembali</a>
 </body>
+
 </html>
