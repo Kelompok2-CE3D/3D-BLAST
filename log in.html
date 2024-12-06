@@ -208,7 +208,68 @@
     <div id="notification" class="notification"></div>
 
     <script>
-        // JavaScript code remains unchanged
+        // Fungsi untuk menampilkan Sign Up
+        function showSignUp() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('signUpContainer').style.display = 'block';
+        }
+
+        // Fungsi untuk menampilkan Login
+        function showLogin() {
+            document.getElementById('signUpContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${isError ? 'error' : ''}`;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Fungsi Sign Up
+        function signUpSuccess() {
+            const newUsername = document.getElementById('newUsername').value;
+            const newEmail = document.getElementById('email').value;
+            const newPassword = document.getElementById('newPassword').value;
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            const isEmailUsed = users.some(user => user.email === newEmail);
+            if (isEmailUsed) {
+                showNotification("Email sudah digunakan!", true);
+                return false;
+            }
+
+            users.push({ username: newUsername, email: newEmail, password: newPassword });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            showNotification("Sign up berhasil!");
+            showLogin();
+            return false;
+        }
+
+        // Fungsi Login
+        function loginRedirect() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                showNotification("Login berhasil!");
+                setTimeout(() => {
+                    window.location.href = "biodata.html";
+                }, 1000);
+            } else {
+                showNotification("Username atau password salah!", true);
+            }
+            return false;
+        }
     </script>
 </body>
 
