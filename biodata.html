@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -41,7 +40,7 @@
         input[type="text"],
         input[type="number"],
         select {
-            width: 100%;
+            width: 98%;
             padding: 10px;
             margin: 5px 0 15px;
             border: 1px solid #ddd;
@@ -122,9 +121,9 @@
             <select id="penghasilan" name="penghasilan" required>
                 <option value="">Pilih penghasilan</option>
                 <option value="> Rp2.000.000">> Rp2.000.000</option>
-                <option value="Rp1.500.001 – Rp2.000.000">Rp1.500.001 – Rp2.000.000</option>
-                <option value="Rp1.000.001 – Rp1.500.000">Rp1.000.001 – Rp1.500.000</option>
-                <option value="Rp500.001 – Rp1.000.000">Rp500.001 – Rp1.000.000</option>
+                <option value="Rp1.500.000 – Rp2.000.000">Rp1.500.001 – Rp2.000.000</option>
+                <option value="Rp1.000.000 – Rp1.500.000">Rp1.000.001 – Rp1.500.000</option>
+                <option value="Rp500.000 – Rp1.000.000">Rp500.001 – Rp1.000.000</option>
                 <option value="Rp0 – Rp500.000">Rp0 – Rp500.000</option>
             </select>
 
@@ -132,7 +131,14 @@
             <input type="number" id="tanggungan" name="tanggungan" placeholder="Masukkan jumlah tanggungan" required>
 
             <label for="program">Keikutsertaan Program:</label>
-            <input type="text" id="program" name="program" placeholder="Masukkan nama program (opsional)">
+            <select id="program" name="program">
+                <option value="">Pilih Program></option>
+                <option value="PKH">PKH</option>
+                <option value="BPNT">BPNT</option>
+                <option value="BST">BST</option>
+                <option value="KKS">KKS</option>
+                <option value="KPS">KPS</option>
+
 
             <label for="kondisiRumah">Kondisi Rumah:</label>
             <select id="kondisiRumah" name="kondisiRumah">
@@ -188,7 +194,6 @@
     <script>
         let nomor = 1;
 
-        // Fungsi untuk menambahkan data ke tabel
         function tambahData() {
             const nama = document.getElementById('nama').value;
             const nik = document.getElementById('nik').value;
@@ -200,10 +205,9 @@
             const statusRumah = document.getElementById('statusRumah').value;
             const pekerjaan = document.getElementById('pekerjaan').value;
 
-            // Pengecekan jika NIK sudah terdaftar
             const existingRows = document.querySelectorAll('#dataTable tbody tr');
             for (let row of existingRows) {
-                const rowNIK = row.cells[2].textContent; // Mengambil NIK dari tabel
+                const rowNIK = row.cells[2].textContent;
                 if (rowNIK === nik) {
                     alert('NIK sudah terdaftar!');
                     return;
@@ -218,7 +222,7 @@
             let layak = 'Tidak Layak';
             if (
                 penghasilan === "Rp0 – Rp500.000" ||
-                (penghasilan === "Rp500.001 – Rp1.000.000" && tanggungan > 2) ||
+                (penghasilan === "Rp500.000 – Rp1.000.000" && tanggungan > 2) ||
                 kondisiRumah === "Buruk" ||
                 statusRumah === "Menumpang"
             ) {
@@ -248,25 +252,33 @@
             document.getElementById('dataForm').reset();
         }
 
-        function simpanData() {
-            tambahData();
-            alert('Data berhasil disimpan ke tabel.');
-        }
-
         function hapusData(button) {
             const row = button.parentElement.parentElement;
-            row.remove();
-            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const rows = table.getElementsByTagName('tr');
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].getElementsByTagName('td')[0].textContent = i + 1;
-            }
-            nomor = rows.length + 1;
+            row.parentElement.removeChild(row);
+            nomor--;
+        }
+
+        function editData(button) {
+            const row = button.parentElement.parentElement;
+            const cells = row.getElementsByTagName('td');
+
+            document.getElementById('nama').value = cells[1].textContent;
+            document.getElementById('nik').value = cells[2].textContent;
+            document.getElementById('alamat').value = cells[3].textContent;
+            document.getElementById('penghasilan').value = cells[4].textContent;
+            document.getElementById('tanggungan').value = cells[5].textContent;
+            document.getElementById('program').value = cells[6].textContent !== '-' ? cells[6].textContent : '';
+            document.getElementById('kondisiRumah').value = cells[7].textContent !== '-' ? cells[7].textContent : '';
+            document.getElementById('statusRumah').value = cells[8].textContent !== '-' ? cells[8].textContent : '';
+            document.getElementById('pekerjaan').value = cells[9].textContent !== '-' ? cells[9].textContent : '';
+
+            hapusData(button);
+            document.getElementById('nama').focus();
         }
 
         function logOut() {
             alert('Anda berhasil log out!');
-            window.location.href = 'index.html'; // Redirect ke halaman index
+            window.location.href = 'index.html'; // Sesuaikan dengan halaman log out Anda
         }
     </script>
 </body>
